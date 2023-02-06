@@ -43,6 +43,7 @@
                 android:id="@+id/edtTxtQty"
                 android:layout_below="@id/edtTxtItem"
                  android:hint="@string/enter_qty"
+                android:inputType="number"
 
                 />
             <EditText
@@ -57,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtTxtSize"
+                android:inputType="number"
                 android:layout_below="@id/edtTxtColor"
                 android:hint="@string/enter_size"
 
