@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_id"
+    android:orientation="vertical"
+
+    >
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTitle"
+                android:layout_centerHorizontal="true"
+                android:text="Title"
+                android:textSize="18sp"
+                android:textStyle="italic"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtTxtItem"
+                android:layout_below="@id/txtTitle"
+                android:hint="@string/enter_item"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtTxtQty"
+                android:layout_below="@id/edtTxtItem"
+                 android:hint="@string/enter_qty"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtTxtColor"
+                android:layout_below="@id/edtTxtQty"
+                android:hint="@string/enter_color"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtTxtSize"
+                android:layout_below="@id/edtTxtColor"
+                android:hint="@string/enter_size"
+
+
+                />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtSize"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/btnSave"
+                android:text="@string/save_button"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:backgroundTint="#E91E63"
+
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>
