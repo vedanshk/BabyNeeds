@@ -9,5 +9,6 @@ public class Utils {
     public static final String KEY_QTY = "quantity";
     public static final String KEY_COLOR ="color";
     public static final String KEY_SIZE ="size";
+    public static final String KEY_DATE_NAME = "date_added";
 
 }

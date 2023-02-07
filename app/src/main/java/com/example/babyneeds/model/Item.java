@@ -7,6 +7,16 @@ public class Item {
     private String color;
     private int size;
 
+    private String dateItemAdded;
+
+    public String getDateItemAdded() {
+        return dateItemAdded;
+    }
+
+    public void setDateItemAdded(String dateItemAdded) {
+        this.dateItemAdded = dateItemAdded;
+    }
+
     public Item() {
     }
 
