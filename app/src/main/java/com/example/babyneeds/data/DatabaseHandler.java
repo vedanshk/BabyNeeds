@@ -145,4 +145,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return itemList;
 
     }
+
+    public int updateItem(Item item){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(Utils.KEY_DATE_NAME, item.getItemName());
+        values.put(Utils.KEY_QTY, item.getQuantity());
+        values.put(Utils.KEY_COLOR, item.getColor());
+        values.put(Utils.KEY_SIZE, item.getSize());
+        values.put(Utils.KEY_DATE_NAME, java.lang.System.currentTimeMillis());
+
+     // update
+
+        return db.update(Utils.TABLE_NAME , values , Utils.KEY_ID +"=?" , new String[]{String.valueOf(item.getId())});
+    }
+
+    //delete item
 }
