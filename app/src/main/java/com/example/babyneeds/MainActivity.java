@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -24,9 +25,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "Main Activity";
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private Button saveButton;
@@ -40,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHandler = new DatabaseHandler(this);
+        List<Item> items = databaseHandler.getAllItems();
+
+        for(Item item:items){
+
+            Log.d(TAG, "onCreate: " + item.getItemName());
+
+        }
+
 
         fab = findViewById(R.id.fab);
 
