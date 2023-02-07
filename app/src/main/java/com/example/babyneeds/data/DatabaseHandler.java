@@ -163,4 +163,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //delete item
+
+    public void deleteItem(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(Utils.TABLE_NAME , Utils.KEY_ID +"=?" , new String[]{String.valueOf(id)});
+
+        db.close();
+
+    }
+
+    public int getItemCount(){
+        String countQuery = "Select * from " + Utils.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(countQuery , null);
+        cursor.close();
+        db.close();
+        return cursor.getCount();
+
+
+
+
+    }
 }
