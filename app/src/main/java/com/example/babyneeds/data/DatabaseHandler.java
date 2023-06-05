@@ -30,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 
-        String CREATE_TABLE = "create table " + Utils.TABLE_NAME + "( " + Utils.KEY_ID + " integer primary key," +
+        String CREATE_TABLE = "create table " + Utils.TABLE_NAME + "( " + Utils.KEY_ID + " integer primary key autoincrement," +
                 Utils.KEY_NAME + " text," + Utils.KEY_QTY + " integer," + Utils.KEY_COLOR + " text," +
                 Utils.KEY_SIZE + " integer," + Utils.KEY_DATE_NAME + " long" + ");";
 
@@ -60,7 +60,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(Utils.TABLE_NAME, null, values);
 
-        Log.d(TAG, "addItem: added item");
+
+        Log.d(TAG, "addItem: added item" + values.get((Utils.KEY_NAME)));
 
 
     }
@@ -69,7 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(Utils.TABLE_NAME, new String[]{Utils.KEY_QTY, Utils.KEY_SIZE, Utils.KEY_NAME, Utils.KEY_DATE_NAME, Utils.KEY_COLOR}, Utils.KEY_ID + "=?", new String[]{
+        Cursor cursor = db.query(Utils.TABLE_NAME, new String[]{Utils.KEY_ID ,Utils.KEY_NAME,Utils.KEY_QTY, Utils.KEY_COLOR,  Utils.KEY_SIZE ,Utils.KEY_DATE_NAME}, Utils.KEY_ID + "=?", new String[]{
                 String.valueOf(id)
         }, null, null, null, null);
 
@@ -78,10 +79,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             cursor.moveToNext();
 
-           db.close();
 
-           return setItem(cursor);
+            Item item = new Item();
+            item.setId(cursor.getInt(0));
 
+            item.setItemName(cursor.getString(1));
+            item.setQuantity(cursor.getInt(2));
+
+            item.setColor(cursor.getString(3));
+            item.setSize(cursor.getInt(4));
+
+            long timeStamp = cursor.getLong(cursor.getInt(5));
+
+            Locale loc = new Locale("en", "US");
+            DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, loc);
+
+            String date = dateFormat.format(new Date(timeStamp));
+
+
+            item.setDateItemAdded(date);
+            cursor.close();
+
+           return  item;
 
         }
 
@@ -91,40 +110,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public Item setItem(Cursor cursor){
 
-        Item item = new Item();
-        item.setId(cursor.getInt(cursor.getInt(0)));
-
-        item.setItemName(cursor.getString(cursor.getInt(1)));
-        item.setQuantity(cursor.getInt(cursor.getInt(2)));
-
-        item.setColor(cursor.getString(cursor.getInt(3)));
-        item.setSize(cursor.getInt(cursor.getInt(4)));
-
-
-        long timeStamp = cursor.getLong(cursor.getInt(5));
-
-        Locale loc = new Locale("en", "US");
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, loc);
-
-        String date = dateFormat.format(new Date(timeStamp));
-
-
-        item.setDateItemAdded(date);
-        cursor.close();
-
-
-        return item;
-
-
-    }
     public List<Item> getAllItems(){
 
         SQLiteDatabase db  = this.getReadableDatabase();
 
         List<Item> itemList = new ArrayList<Item>();
-        Cursor cursor = db.query(Utils.TABLE_NAME, new String[]{Utils.KEY_QTY, Utils.KEY_SIZE, Utils.KEY_NAME, Utils.KEY_DATE_NAME, Utils.KEY_COLOR}
+        Cursor cursor = db.query(Utils.TABLE_NAME, new String[]{Utils.KEY_ID ,Utils.KEY_NAME,Utils.KEY_QTY, Utils.KEY_COLOR,  Utils.KEY_SIZE ,Utils.KEY_DATE_NAME}
        ,null ,null ,  null, null, Utils.KEY_DATE_NAME+ " Desc", null);
 
 
@@ -132,14 +124,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             if(cursor.moveToFirst()){
                 do{
-                    Item item = setItem(cursor);
+                    Item item = new Item();
+                    item.setId(cursor.getInt(0));
+                    Log.d(TAG, "getAllItems: " + item.getId());
+                    item.setItemName(cursor.getString(cursor.getColumnIndex(Utils.KEY_NAME)));
+                    Log.d(TAG, "getAllItems: " + item.getItemName());
+                    item.setQuantity(cursor.getInt(2));
+
+                    item.setColor(cursor.getString(3));
+                    item.setSize(cursor.getInt(4));
+
+
+                    long timeStamp = 12123434545L;
+
+                    Locale loc = new Locale("en", "US");
+                    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, loc);
+
+                    String date = dateFormat.format(new Date(timeStamp));
+
+
+                    item.setDateItemAdded(date);
                     itemList.add(item);
 
                 }while(cursor.moveToNext());
             }
 
             cursor.close();
-            db.close();
+
         }
 
         return itemList;

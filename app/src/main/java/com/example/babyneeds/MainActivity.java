@@ -1,5 +1,6 @@
 package com.example.babyneeds;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.babyneeds.data.DatabaseHandler;
@@ -10,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -44,13 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHandler = new DatabaseHandler(this);
-        List<Item> items = databaseHandler.getAllItems();
 
-        for(Item item:items){
-
-            Log.d(TAG, "onCreate: " + item.getItemName());
-
-        }
 
 
         fab = findViewById(R.id.fab);
@@ -62,7 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-        
+        List<Item> items = databaseHandler.getAllItems();
+        Log.d(TAG, "onCreate: Getting all Items");
+
+        for(Item item:items){
+
+            Log.d(TAG, "onCreate: " + item.getItemName());
+
+        }
 
 
     }
@@ -83,6 +86,17 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler.addItem(item);
 
         Snackbar.make(v , "Item Saved" , Snackbar.LENGTH_SHORT).show();
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                    dialog.dismiss();
+                // Todo : move to next screen -details screen
+                startActivity( new Intent(MainActivity.this , ListActivity.class));
+
+            }
+        },1200);
 
     }
 
